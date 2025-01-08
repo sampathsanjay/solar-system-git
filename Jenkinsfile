@@ -16,24 +16,28 @@ pipeline {
                 }
             }
         }
-        stage('NPM Dependency Audit') {
-            steps {
-                script {
-                    // Audit npm dependencies for critical issues
-                    sh '''
-                        npm audit --audit-level=critical
-                    '''
+        stage('Security Checks') {
+            parallel {
+                stage('NPM Dependency Audit') {
+                    steps {
+                        script {
+                            // Audit npm dependencies for critical issues
+                            sh '''
+                                npm audit --audit-level=critical
+                            '''
+                        }
+                    }
                 }
-            }
-        }
-        stage('OWASP Dependency Check') {
-            steps {
-                dependencyCheck additionalArguments: '''
-                    --scan ./ 
-                    --out ./ 
-                    --format ALL 
-                    --prettyPrint
-                ''', odcInstallation: 'OWASP-DependencyCheck10'
+                stage('OWASP Dependency Check') {
+                    steps {
+                        dependencyCheck additionalArguments: '''
+                            --scan ./ 
+                            --out ./ 
+                            --format ALL 
+                            --prettyPrint
+                        ''', odcInstallation: 'OWASP-DependencyCheck10'
+                    }
+                }
             }
         }
     }

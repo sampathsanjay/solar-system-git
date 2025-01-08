@@ -16,6 +16,16 @@ pipeline {
                 }
             }
         }
+        stage('NPM Dependency Audit') {
+            steps {
+                script {
+                    // Audit npm dependencies for critical issues
+                    sh '''
+                        npm audit --audit-level=critical
+                    '''
+                }
+            }
+        }
     }
 }
 

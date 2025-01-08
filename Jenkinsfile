@@ -1,16 +1,17 @@
 pipeline {
     agent any
     tools {
-        nodejs 'Node23.6'
+        nodejs 'Node23.6' // Ensure Node23.6 is configured in Jenkins
     }
     stages {
-        stage('Check Node.js Version') {
+        stage('Installing Dependencies') {
             steps {
                 script {
-                    // Running the node command to check the version
+                    // Install dependencies with npm
                     sh '''
-                       node -v
-                       npm -v
+                        npm install --no-audit
+                        node -v
+                        npm -v
                     '''
                 }
             }

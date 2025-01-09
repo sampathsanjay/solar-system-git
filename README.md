@@ -1,6 +1,6 @@
 # Solar System NodeJS Application
 
-A simple HTML+MongoDB+NodeJS project to display Solar System and it's planets Star and Sun.
+A simple HTML+MongoDB+NodeJS project to display Solar System and it's planets Star and Sun, Moon.
 
 ---
 ## Requirements

@@ -39,14 +39,22 @@ pipeline {
                             ''', odcInstallation: 'OWASP-DependencyCheck10'
 
                             publishHTML([
-                                allowMissing: true, 
-                                alwaysLinkToLastBuild: true, 
-                                keepAll: true, 
-                                reportDir: './', 
-                                reportFiles: 'dependency-check-report.html', 
-                                reportName: 'Dependency Check Report', 
+                                allowMissing: true,
+                                alwaysLinkToLastBuild: true,
+                                keepAll: true,
+                                reportDir: './',
+                                reportFiles: 'dependency-check-report.html',
+                                reportName: 'Dependency Check Report',
                                 reportTitles: ''
                             ])
+                        }
+                    }
+                }
+                stage('Testing the Code') {
+                    steps {
+                        script {
+                            // Run the tests using npm
+                            sh 'npm test'
                         }
                     }
                 }

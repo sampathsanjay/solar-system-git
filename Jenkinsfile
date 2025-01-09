@@ -30,12 +30,24 @@ pipeline {
                 }
                 stage('OWASP Dependency Check') {
                     steps {
-                        dependencyCheck additionalArguments: '''
-                            --scan ./ 
-                            --out ./ 
-                            --format ALL 
-                            --prettyPrint
-                        ''', odcInstallation: 'OWASP-DependencyCheck10'
+                        script {
+                            dependencyCheck additionalArguments: '''
+                                --scan ./ 
+                                --out ./ 
+                                --format ALL 
+                                --prettyPrint
+                            ''', odcInstallation: 'OWASP-DependencyCheck10'
+
+                            publishHTML([
+                                allowMissing: true, 
+                                alwaysLinkToLastBuild: true, 
+                                keepAll: true, 
+                                reportDir: './', 
+                                reportFiles: 'dependency-check-report.html', 
+                                reportName: 'Dependency Check Report', 
+                                reportTitles: ''
+                            ])
+                        }
                     }
                 }
             }
